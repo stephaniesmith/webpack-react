@@ -1,0 +1,42 @@
+{
+  "name": "webpack-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --hot --open --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stephaniesmith/webpack-react.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stephaniesmith/webpack-react/issues"
+  },
+  "homepage": "https://github.com/stephaniesmith/webpack-react#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "eslint": "^4.19.1",
+    "eslint-plugin-babel": "^5.1.0",
+    "eslint-plugin-react": "^7.8.2",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.10.1",
+    "webpack-cli": "^2.1.4",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "cowsay-browser": "^1.1.8",
+    "npm": "^6.1.0",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
+  }
+}
