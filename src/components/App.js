@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import cowsay from 'cowsay-browser';
+import dom2image from 'dom-to-image';
+import fileSaver from 'file-saver';
 
 let cows = null;
 cowsay.list((err, _cows) => {
@@ -10,50 +12,55 @@ export default class App extends Component {
 
   constructor() {
     super();
+
     this.state = {
       cows,
       selected: 'default',
       name: 'Portland',
-      color: '#0000000'
+      color: '#0000000',
+      image: null
     };
   }
 
   handleNameChange({ target }) {
-    this.setState({ name: target.value })
+    this.setState({ name: target.value });
   }
 
   handleColorChange({ target }) {
-    this.setState({ color: target.value })
+    this.setState({ color: target.value });
   }
 
   handleCowChange({ target }) {
-    this.setState({ selected: target.value })
+    this.setState({ selected: target.value });
   }
 
   handleImageSrc({ target }) {
-    this.setState({ image: target.value })
+    this.setState({ image: target.value });
   }
 
   handleUpload({ target }) {
     const reader = new FileReader();
 
-    reader.readAsDataURL(target.files[0])
+    reader.readAsDataURL(target.files[0]);
+
     reader.onload = () => {
-      this.setState({ image: reader.result })
-    }
+      this.setState({ image: reader.result });
+    };
   }
 
   handleExport() {
-    dom2image.toBlob(this.imageExport).t
+    dom2image.toBlob(this.imageExport).then(blob => {
+      fileSaver.saveAs(blob, 'cute-image.png');
+    });
   }
     
   render() {
-    const { cows, selected, name, color } = this.state;
+    const { cows, selected, name, color, image } = this.state;
 
     const cowSaid = cowsay.say({
       text: name,
       f: selected
-    })
+    });
 
     return (
       <main>
@@ -86,21 +93,27 @@ export default class App extends Component {
         <section>
           <div>
             <label>
-                            Image Src:
-              <input onChange={event => this.handleUpload(event)} Update Image/>
+                Image Src:
+              <input onChange={event => this.handleImageSrc(event)} Update Image/>
             </label>
           </div>
           <div>
             <label>
-                            Image:
+                Image:
               <input 
                 type="file"
-                onChange={event => this.handleImageSrc(event)}
+                onChange={event => this.handleUpload(event)}
               />
             </label>
           </div>
+
           <div>
-            <button onClick={event => this.handleExport(event)}></button>
+            <button onClick={() => this.handleExport()}>Export</button>
+          </div>
+
+          <div className="image-container" ref={node => this.imageExport = node}>
+            <h1>What an image!</h1>
+            <img src={image}/>
           </div>
         </section>
       </main>
